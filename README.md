@@ -8,9 +8,6 @@ V0.87 本项目是一个CT系数计算中间程序，程序开发重度使用Dee
 不含完整版主程序 `CT_toroidal.m` 与出图函数 `ct_plot.m`、也不含依赖 C_T 的
 `ct_selftest.m` / `ct_selfcheck.m` / `matcheck.js`。
 
-核心物理代码是**逐字复制**的（未改一行），因此结果与完整版一致：
-CBC 绝热电子 ky=0.4（k_yρ_s=0.28284）的局域 ITG 根 = **−0.26280 + 0.18074i [c_s/a]**，
-与完整版回归值逐位相同。
 
 ---
 
@@ -77,18 +74,7 @@ linear_demo('alpha');    % s-α 的 α 扫描
 linear_demo('tem');      % TEM 算例(离子近乎被动 + 动力学电子)
 ```
 
-已生成的示例图（`figs\`）：
 
-| 图 | 内容 |
-|---|---|
-| `cbc_adiabatic_scan.png` | CBC 绝热电子：γ(k)、ω_r(k)、γ/\|ω_r\|(k)、k∥(k) 四联图 + GX(Miller) 参考带 |
-| `cbc_root_spectrum.png` | 最高 k 处的复平面根谱（盒内全部根 + 选中支） |
-| `kpar_models_compare.png` | k∥ = `zero` / `balloon_rms` / `qR` 三种模型的 γ(k) 对比 |
-| `alpha_scan.png` | s-α 的 α = 0…3 对 γ(k) 与 ω_r(k) 的影响 |
-| `tem_case.png` | TEM 算例（离子近乎被动）：不稳定根落在 Re ω > 0 一侧 |
-
-★ TEM 算例里离子梯度取 **1.0e-3**（而不是 0）：`ct_read_profile` 严格校验 `R/L_X > 0`
-（这是有意的防错设计），极小正数在效果上等价于"离子被动"。
 
 ```matlab
 % —— 手动用 ——
@@ -139,12 +125,6 @@ disp(out.summary);                      % 汇总表(cell; 可直接写文件)
 | L8 | 角度平均的小域极限 = 局域根 | 2.2e−5 |
 | L9 | 场矩阵（气球模）在局域根处取极小、Ω 翻倍升 >5 倍 | 3.89e−4 → 5.22e−1（升 1344 倍） |
 
-★ L9 需要**绝热电子**口径（f_t = 0 且通行电子 Boltzmann）：`ct_balloon` 的场矩阵目前只含
-"绝热或纯通行电子"，用 f_t ≈ 0.55 的根去探会让极小明显变浅。`linear_selftest` 已强制该口径。
-
-```matlab
-ok = linear_selftest;                 % 9/9
-```
 
 ## 5　与完整版的关系 / 同步
 
